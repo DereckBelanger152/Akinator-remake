@@ -1,8 +1,8 @@
-Nom complet :
-Numéro de dossier (NI) :
-Lien vers le dépôt GitHub PRIVÉ de votre TP :
-Avez-vous invité les correcteurs comme collaborateurs à votre dépôt GitHub (Oui/Non) :
-Estimation du temps de réalisation :
+Nom complet : Dereck Bélanger
+Numéro de dossier (NI) : 537293691
+Lien vers le dépôt GitHub PRIVÉ de votre TP : https://github.com/DereckBelanger152/TP2_H2025 
+Avez-vous invité les correcteurs comme collaborateurs à votre dépôt GitHub (Oui/Non) : Oui
+Estimation du temps de réalisation : 
 
 
 Fonctionnalités
