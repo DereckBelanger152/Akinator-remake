@@ -17,7 +17,9 @@ def types_caracteristiques_ordre_aleatoire():
     Returns:
         list: La liste des types de caractéristiques.
     """
-    # TODO: VOTRE CODE ICI
+    types = list(CARACTERISTIQUES.keys())
+    shuffle(types)
+    return types
 
 
 def valeurs_ordre_aleatoire(type_caracteristique):
@@ -35,7 +37,9 @@ def valeurs_ordre_aleatoire(type_caracteristique):
     Returns:
         list: La liste des valeurs possibles pour ce type de caractéristique.
     """
-    # TODO: VOTRE CODE ICI
+    valeurs = CARACTERISTIQUES[type_caracteristique].copy()
+    shuffle(valeurs)
+    return valeurs
 
 
 def possede(donnees_personnage, type_caracteristique, valeur_caracteristique):
@@ -55,7 +59,15 @@ def possede(donnees_personnage, type_caracteristique, valeur_caracteristique):
     Returns:
         bool: True si le personnage possède la caractéristique, False sinon.
     """
-    # TODO: VOTRE CODE ICI
+    if type_caracteristique not in donnees_personnage:
+        return False
+
+    valeur = donnees_personnage[type_caracteristique]
+
+    if type_caracteristique in ["accessoires", "pilosite"]:
+        return valeur_caracteristique in valeur
+    else:
+        return valeur_caracteristique == valeur
 
 
 def score_dichotomie(personnages_restants, type_caracteristique, valeur_caracteristique):
@@ -88,7 +100,12 @@ def score_dichotomie(personnages_restants, type_caracteristique, valeur_caracter
     Returns:
         int: Le score.
     """
-    # TODO: VOTRE CODE ICI
+    total = len(personnages_restants)
+    nb_avec = sum(possede(perso, type_caracteristique, valeur_caracteristique) 
+                  for perso in personnages_restants.values())
+    nb_sans = total - nb_avec
+
+    return total - max(nb_avec, nb_sans)
 
 
 def selectionner_caracteristique(personnages_restants):
@@ -106,7 +123,18 @@ def selectionner_caracteristique(personnages_restants):
     Returns:
         (string, string): Le type et la valeur ayant le meilleur score dichotomique.
     """
-    # TODO: VOTRE CODE ICI
+    meilleur_score = -1
+    meilleure_caracteristique = None
+
+    for type_caracteristique in types_caracteristiques_ordre_aleatoire():
+        for valeur in valeurs_ordre_aleatoire(type_caracteristique):
+            score = score_dichotomie(personnages_restants, type_caracteristique, valeur)
+            
+            if score > meilleur_score:
+                meilleur_score = score
+                meilleure_caracteristique = (type_caracteristique, valeur)
+
+    return meilleure_caracteristique
 
 
 def mettre_a_jour_hypotheses(personnages_restants, type_caracteristique, valeur_caracteristique, reponse):
@@ -128,7 +156,10 @@ def mettre_a_jour_hypotheses(personnages_restants, type_caracteristique, valeur_
     Returns:
         dict: Le dictionnaire de personnages restants mis à jour.
     """
-    # TODO: VOTRE CODE ICI
+    return {
+        nom: donnees for nom, donnees in personnages_restants.items()
+        if possede(donnees, type_caracteristique, valeur_caracteristique) == reponse
+    }
 
 
 if __name__ == '__main__':
